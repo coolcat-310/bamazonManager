@@ -22,17 +22,10 @@ var connection = mysql.createConnection({
 });
 
 
-function testConnnection() {
-
-    connection.connect(function (err) {
-        if (err) throw err;
-        console.log("connected as id " + connection.threadId);
-    });
-
-};
-
 getTable = function(){
-    //Retrieves all
+    /***
+     * getTable prints the inventory table and then calls the function, ask, in prompt.js
+     */
     connection.query(constant.selecAll, function (err, res) {
         if(err) throw err;
        console.table('\n',res);
@@ -41,6 +34,9 @@ getTable = function(){
 };
 
 lowQuantityItems = function () {
+    /***
+     * lowQuantityItems prints items which have a stock_quantity less than five
+     */
     connection.query(constant.lowQuantityItems, function (err, res){
         if(err) throw err;
         console.table('\n', res);
@@ -49,30 +45,33 @@ lowQuantityItems = function () {
 };
 
 addStock = function(id, stock){
+    /***
+     * addStock modifies the stock_quantity of a given id
+     */
     connection.query(constant.addInventory,[stock, id],function(err, res){
         if(err){
             console.log(err);
         }else {
             if (res.affectedRows === 0) {
-                console.log('\n\tInvalid input(s), please Try again.\n'.red);
+                console.log(constant.invalidInput.red);
                 prompt.ask();
             } else {
                 getTable();
-
             }
         }
-
-
     })
 };
 
 addItem = function(name, department, price, stock){
-    connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)',[name,department,price,stock], function(err, res){
+    /***
+     * addItem inserts a new item into the database
+     */
+    connection.query(constant.addItem,[name,department,price,stock], function(err, res){
         if(err){
             console.log(err);
         }else {
             if (res.affectedRows === 0) {
-                console.log('\n\tInvalid input(s), please Try again.\n'.red);
+                console.log(constant.invalidInput.red);
                 prompt.ask();
             } else {
                 getTable();
@@ -80,9 +79,6 @@ addItem = function(name, department, price, stock){
         }
     })
 };
-
-
-
 
 
 exports.getTable = getTable;

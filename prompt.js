@@ -8,6 +8,11 @@ var colors = require('colors');
 var data = require('./app');
 
 ask = function() {
+    /***
+     * ask function prompts the user to select one of the predefined functions which will query
+     * the database for the appropriate information
+     * @type {[*]}
+     */
 
     var questions = [
         {
@@ -47,6 +52,11 @@ ask = function() {
 
 
 function addInventory(){
+    /***
+     * addInventory prompts the user to enter the id of the product and the stock_quantity, so that information
+     * can be updated in the database
+     * @type {[*]}
+     */
     var whichItem = [
         {
             type: 'input',
@@ -80,6 +90,11 @@ function addInventory(){
 }
 
 function addItem(){
+    /***
+     * addItem prompts the user to enter name, department, price, and stock of the item, and then the information
+     * is updated into database.
+     * @type {[*]}
+     */
     var makeItem = [
         {
             type: 'input',
